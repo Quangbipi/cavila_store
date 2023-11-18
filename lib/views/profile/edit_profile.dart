@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+
+import '../../constans.dart';
+import '../../widgets/widget_content_row.dart';
+
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
+
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Constants.primaryColor,
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(255, 212, 222, 0),
+        title: Text('Sửa hồ sơ'),
+        centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: const BoxDecoration(
+                    color: Colors.white, shape: BoxShape.circle),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Color.fromRGBO(233, 110, 110, 1),
+                ),
+              )
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Lưu',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Constants.pinkColor2),
+              ))
+        ],
+      ),
+      body: Column(children: [
+        Divider(
+          thickness: 3,
+        ),
+        Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CircleAvatar(
+                  radius: 48,
+                  backgroundImage: AssetImage('assets/images/anh.png'),
+                ),
+                Text('Chạm để thay đổi avatar')
+              ],
+            )),
+        Expanded(
+            flex: 3,
+            child: Column(
+              children: [
+                Divider(thickness: 1,),
+                ContentRow.contentRow(
+                    'Tên',
+                    () {},
+                    'Quang',
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Constants.pinkColor,
+                    )),
+                Divider(
+                  thickness: 1,
+                ),
+                ContentRow.contentRow(
+                    'Giới tính',
+                    () {},
+                    'Thiết lập ngay',
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Constants.pinkColor,
+                    )),
+                Divider(
+                  thickness: 1,
+                ),
+                ContentRow.contentRow(
+                    'Ngày sinh',
+                    () {},
+                    'Thiết lập ngay',
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Constants.pinkColor,
+                    )),
+                Divider(
+                  thickness: 1,
+                ),
+                ContentRow.contentRow(
+                    'Điện thoại',
+                    () {},
+                    'xxxx154',
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Constants.pinkColor,
+                    )),
+                Divider(
+                  thickness: 1,
+                ),
+                ContentRow.contentRow(
+                    'Email',
+                    () {},
+                    'Thiết lập ngay',
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Constants.pinkColor,
+                    )),
+                Divider(
+                  thickness: 1,
+                ),
+              ],
+            ))
+      ]),
+    );
+  }
+}
