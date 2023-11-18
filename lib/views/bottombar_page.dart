@@ -41,19 +41,19 @@ class _BottomBarPageState extends State<BottomBarPage> {
         items:const[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home, color: Constants.pinkColor,),
+            activeIcon: Icon(Icons.home, color: Constants.secondaryColor,),
             label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            activeIcon: Icon(Icons.menu, color: Constants.pinkColor,),
+            activeIcon: Icon(Icons.menu, color: Constants.secondaryColor,),
             label: 'Product'),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined), 
-            activeIcon: Icon(Icons.shopping_cart, color: Constants.pinkColor,),
+            activeIcon: Icon(Icons.shopping_cart, color: Constants.secondaryColor,),
             label: 'Cart'),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person, color: Constants.pinkColor,),
+            activeIcon: Icon(Icons.person, color: Constants.secondaryColor,),
             label: 'Profile')
         ]),
     );

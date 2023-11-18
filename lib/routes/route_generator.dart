@@ -1,5 +1,6 @@
 import 'package:cavila_store/views/auth/sign_up_page.dart';
 import 'package:cavila_store/views/bottombar_page.dart';
+import 'package:cavila_store/views/cart/cart_page.dart';
 import 'package:cavila_store/views/cart/order_page.dart';
 import 'package:cavila_store/views/home/home_page.dart';
 import 'package:cavila_store/views/payment/payment_page.dart';
@@ -42,6 +43,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => OrderPage());
       case '/voucherPage':
         return MaterialPageRoute(builder: (_) => VoucherPage());
+      case '/cartPage':
+        return MaterialPageRoute(builder: (_) => CartPage());
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

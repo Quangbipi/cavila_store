@@ -1,9 +1,10 @@
+import 'package:cavila_store/constans.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget{
   static PreferredSizeWidget appBar(){
     return AppBar(
-        backgroundColor: Color.fromRGBO(255, 212, 222, 0),
+        backgroundColor: Colors.transparent,
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -24,7 +25,7 @@ class AppBarWidget{
             ),
             const Icon(
               Icons.apps,
-              color: Color.fromRGBO(233, 110, 110, 1),
+              color: Constants.secondaryColor,
             )
           ],
         ),

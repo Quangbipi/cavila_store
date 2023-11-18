@@ -10,4 +10,5 @@ class RoutePaths{
   static const String editAddress = '/editAddress';
   static const String orderPage = '/orderPage';
   static const String voucherPage = '/voucherPage';
+  static const String cartPage = '/cartPage';
 }

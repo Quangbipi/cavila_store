@@ -15,7 +15,7 @@ class Utils {
     return TextButton(
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(Size(width, height)),
-            backgroundColor: MaterialStateProperty.all(Constants.pinkColor)),
+            backgroundColor: MaterialStateProperty.all(Constants.secondaryColor)),
         onPressed: () {
           onClick();
         },
@@ -116,5 +116,9 @@ class Utils {
   static String numberFormat(int number){
     NumberFormat numberFormat = NumberFormat("#,##0", "vi_VN");
     return numberFormat.format(number);
+  }
+
+  static bool checkAutoLogin(String token){
+    return token.isNotEmpty;
   }
 }

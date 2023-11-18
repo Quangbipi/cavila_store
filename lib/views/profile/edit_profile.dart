@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../constans.dart';
+import '../../models/account_infor.dart';
+import '../../secure_storage_service.dart';
+import '../../utils.dart';
 import '../../widgets/widget_content_row.dart';
 
 class EditProfile extends StatefulWidget {
@@ -11,6 +14,20 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  AccountInfor? accountInfor;
+  
+  void getData() async{
+    accountInfor = await SecureStorageService().getAccount();
+    setState(() {
+      
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,40 +96,40 @@ class _EditProfileState extends State<EditProfile> {
                 ContentRow.contentRow(
                     'Tên',
                     () {},
-                    'Quang',
+                    accountInfor != null && Utils.checkAutoLogin(accountInfor!.token)? accountInfor!.fullName : '',
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Constants.pinkColor,
                     )),
-                Divider(
-                  thickness: 1,
-                ),
-                ContentRow.contentRow(
-                    'Giới tính',
-                    () {},
-                    'Thiết lập ngay',
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Constants.pinkColor,
-                    )),
-                Divider(
-                  thickness: 1,
-                ),
-                ContentRow.contentRow(
-                    'Ngày sinh',
-                    () {},
-                    'Thiết lập ngay',
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Constants.pinkColor,
-                    )),
+                // Divider(
+                //   thickness: 1,
+                // ),
+                // ContentRow.contentRow(
+                //     'Giới tính',
+                //     () {},
+                //     'Thiết lập ngay',
+                //     Icon(
+                //       Icons.arrow_forward_ios,
+                //       color: Constants.pinkColor,
+                //     )),
+                // Divider(
+                //   thickness: 1,
+                // ),
+                // ContentRow.contentRow(
+                //     'Ngày sinh',
+                //     () {},
+                //     'Thiết lập ngay',
+                //     Icon(
+                //       Icons.arrow_forward_ios,
+                //       color: Constants.pinkColor,
+                //     )),
                 Divider(
                   thickness: 1,
                 ),
                 ContentRow.contentRow(
                     'Điện thoại',
                     () {},
-                    'xxxx154',
+                    accountInfor != null && Utils.checkAutoLogin(accountInfor!.token)? accountInfor!.phoneNumber : '',
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Constants.pinkColor,
@@ -123,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
                 ContentRow.contentRow(
                     'Email',
                     () {},
-                    'Thiết lập ngay',
+                    accountInfor != null && Utils.checkAutoLogin(accountInfor!.token)? accountInfor!.email : '',
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Constants.pinkColor,

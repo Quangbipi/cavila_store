@@ -18,11 +18,14 @@ class MyApp extends StatelessWidget {
         providers: [
           RepositoryProvider<AuthRepository>(create: (context) => AuthRepository()),
           RepositoryProvider<ProductRepository>(create: (context) => ProductRepository()),
+          
         ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => AuthBloc(RepositoryProvider.of(context))),
             BlocProvider(create: (context) => ProductBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => GetFemaleProductBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => GetMaleProductBloc(RepositoryProvider.of(context))),
           ],
           child: MaterialApp(
             title: 'Cavila Store',
