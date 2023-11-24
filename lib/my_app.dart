@@ -1,7 +1,15 @@
 import 'package:cavila_store/blocs/fc_auth/bloc.dart';
 import 'package:cavila_store/blocs/fc_auth/repository.dart';
+import 'package:cavila_store/blocs/fc_bottom_bar/bloc.dart';
+import 'package:cavila_store/blocs/fc_check_login/bloc.dart';
+import 'package:cavila_store/blocs/fc_order/bloc.dart';
+import 'package:cavila_store/blocs/fc_order/repository.dart';
+import 'package:cavila_store/blocs/fc_payment/bloc.dart';
+import 'package:cavila_store/blocs/fc_payment/repository.dart';
 import 'package:cavila_store/blocs/fc_product/bloc.dart';
 import 'package:cavila_store/blocs/fc_product/repository.dart';
+import 'package:cavila_store/blocs/fc_voucher/bloc.dart';
+import 'package:cavila_store/blocs/fc_voucher/repository.dart';
 import 'package:cavila_store/constans.dart';
 import 'package:cavila_store/routes/route_generator.dart';
 import 'package:cavila_store/routes/route_paths.dart';
@@ -18,7 +26,9 @@ class MyApp extends StatelessWidget {
         providers: [
           RepositoryProvider<AuthRepository>(create: (context) => AuthRepository()),
           RepositoryProvider<ProductRepository>(create: (context) => ProductRepository()),
-          
+          RepositoryProvider<VoucherRepository>(create: (context) => VoucherRepository()),
+          RepositoryProvider<PaymentRepository>(create: (context) => PaymentRepository()),
+          RepositoryProvider<OrderRepository>(create: (context) => OrderRepository()),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -26,6 +36,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => ProductBloc(RepositoryProvider.of(context))),
             BlocProvider(create: (context) => GetFemaleProductBloc(RepositoryProvider.of(context))),
             BlocProvider(create: (context) => GetMaleProductBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => BottomBarBloc()),
+            BlocProvider(create: (context) => VoucherBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => PaymentBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => OrderBloc(RepositoryProvider.of(context))),
+            BlocProvider(create: (context) => CheckBloc()),
           ],
           child: MaterialApp(
             title: 'Cavila Store',

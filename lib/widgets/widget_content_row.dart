@@ -19,7 +19,7 @@ class ContentRow{
               ],
             ),
             
-            Icon(Icons.arrow_forward_ios, color: Constants.pinkColor,)
+            Icon(Icons.arrow_forward_ios, color: Constants.secondaryColor,)
           ],
         ),
       ),
@@ -43,8 +43,42 @@ class ContentRow{
               ],
             ),
             
-            
           ],
+        ),
+      ),
+    );
+  }
+
+  static Widget contentRowWithTextField(String title, Function action, TextEditingController controller, Widget widget, bool enable){
+    
+    return InkWell(
+      onTap: () {
+        action();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+        child: Container(
+          height: 30,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title, style: TextStyle(fontSize: 18, color: Colors.black),),
+              Expanded(
+                child: TextField(
+                    enabled: enable,
+                    controller: controller,
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide.none
+                      ),
+                      
+                    ),
+                ),
+              )
+              
+            ],
+          ),
         ),
       ),
     );

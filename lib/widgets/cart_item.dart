@@ -1,19 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cavila_store/blocs/fc_product/bloc.dart';
+import 'package:cavila_store/blocs/fc_product/event.dart';
 import 'package:cavila_store/constans.dart';
-import 'package:cavila_store/models/fake_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/cart_model.dart';
 import '../utils.dart';
 
+// ignore: must_be_immutable
 class CartItem extends StatefulWidget {
-  final FakeData fakeData;
-  const CartItem({super.key, required this.fakeData});
+  final LikedProductCart product;
+  final ValueChanged<bool> onCheckboxChanged;
+  final ValueChanged<int> onTotalPriceChanged;
+  CartItem({super.key, required this.product, required this.onCheckboxChanged, required this.onTotalPriceChanged});
 
   @override
   State<CartItem> createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
+  int number = 1;
+  bool isSelect = false;
+  int totalPrice = 0;
+
+  
   @override
   Widget build(BuildContext context) {
     double screenHeight = Utils.screenHeight(context);
@@ -29,7 +40,7 @@ class _CartItemState extends State<CartItem> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: CachedNetworkImage(
-                imageUrl: widget.fakeData.index,
+                imageUrl: widget.product.productId.images.first,
                 imageBuilder: (context, imageProvider) {
                   return Container(
                     decoration: BoxDecoration(
@@ -55,11 +66,11 @@ class _CartItemState extends State<CartItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Áo dài',
+                      widget.product.productId.name,
                       style: TextStyle(fontSize: 18),
                     ),
                     Text(
-                      '1000\$',
+                      Utils.numberFormat(widget.product.productId.price),
                       style: TextStyle(fontSize: 18),
                     ),
                     Row(
@@ -68,7 +79,7 @@ class _CartItemState extends State<CartItem> {
                           width: 32,
                           height: 32,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
+                              shape: BoxShape.circle, color: Utils.getColor(widget.product.color)),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -78,7 +89,7 @@ class _CartItemState extends State<CartItem> {
                             alignment: Alignment.center,
                             decoration: const BoxDecoration(
                                 color: Colors.white, shape: BoxShape.circle),
-                            child: Text('XL'),
+                            child: Text(widget.product.size),
                           ),
                         ),
                         Container(
@@ -87,7 +98,55 @@ class _CartItemState extends State<CartItem> {
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
                               color: Colors.white, shape: BoxShape.circle),
-                          child: Text('2'),
+                          child: Text(number.toString()),
+                        ),
+                        SizedBox(width: 10,),
+                        Container(
+                          width: 64,
+                          height: 32,
+                          alignment: Alignment.center,
+                          decoration:  BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(width: 5,),
+                              InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    if(number == 1) return;
+                                    number--;
+                                    widget.onCheckboxChanged(isSelect);
+                                    if(isSelect ){
+                                      widget.onTotalPriceChanged(-1);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  width: 16,
+                                  height: 32,
+                                  child: Text('-', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
+                              ),
+                              VerticalDivider(thickness: 1,indent: 0,),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    number++;
+                                    widget.onCheckboxChanged(isSelect);
+                                    if(isSelect){
+                                      widget.onTotalPriceChanged(1);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  height: 32,
+                                  width: 16,
+                                  child: Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
+                              ),
+                            ],
+                          )
                         ),
                       ],
                     )
@@ -96,18 +155,30 @@ class _CartItemState extends State<CartItem> {
                 Column(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<ProductBloc>().add(DeleteProductInCart(widget.product.productId.id));
+                        setState(() {
+                          isSelect = false;
+                          widget.onCheckboxChanged(isSelect);
+                        });
+                      },
                       icon: Icon(Icons.delete_outline_outlined),
-                      color: Constants.pinkColor2,
+                      color: Constants.secondaryColor,
                     ),
                     SizedBox(
                       width: 24,
                       height: 24,
                       child: Checkbox(
                           fillColor:
-                              MaterialStateProperty.all(Constants.pinkColor2),
-                          value: true,
-                          onChanged: (value) {}),
+                              MaterialStateProperty.all(Constants.secondaryColor),
+                          value: isSelect,
+                          onChanged: (value) {
+                            setState(() {
+                              isSelect = value!;
+                              widget.onCheckboxChanged(isSelect);
+                              widget.onTotalPriceChanged(number);
+                            });
+                          }),
                     )
                   ],
                 )

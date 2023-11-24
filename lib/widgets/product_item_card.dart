@@ -55,30 +55,6 @@ class ProductItemCard extends StatelessWidget {
                     },
                   ),
                 ),
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 30,
-                        height: 30,
-                        
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white
-                        ),
-                        
-                      ),
-                      IconButton(
-                            padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                            icon: Icon(Icons.favorite_sharp, size: 20,), 
-                            color: Colors.redAccent,
-                            onPressed: () {  },),
-                    ],
-                  ),
-                )
               ]),
             ),
             SizedBox(height: 10,),
@@ -88,7 +64,7 @@ class ProductItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(product.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),), 
-                Text(product.price.toString(), style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),)],
+                Text('${Utils.numberFormat(product.price)} đ', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),)],
             )),
             
           ],

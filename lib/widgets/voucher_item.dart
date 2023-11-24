@@ -1,7 +1,9 @@
+import 'package:cavila_store/models/voucher_model.dart';
 import 'package:flutter/material.dart';
 
 class VoucherItem extends StatelessWidget {
-  const VoucherItem({super.key});
+  final Voucher voucher;
+  const VoucherItem({super.key, required this.voucher});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +22,12 @@ class VoucherItem extends StatelessWidget {
                     Container(
                       width: 80,
                       padding: EdgeInsets.only(left: 10),
-                      child: Text('Thẻ giảm giá 30%', style: TextStyle(color: Colors.white),))
+                      child: Text(voucher.name, style: TextStyle(color: Colors.white),maxLines: 2,))
                   ],
                 )),
               Expanded(
                 flex: 2,
-                child: Center(
-                  child: Text('Thẻ giảm giá 30% cho hóa đơn của bạn', style: TextStyle(fontSize: 18, color: Colors.black),),
+                child: Text(voucher.name, style: TextStyle(fontSize: 18, color: Colors.black),
                 ))
             ],
           ),

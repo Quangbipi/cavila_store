@@ -24,3 +24,22 @@ class SignUpEvent extends AuthEvent {
 class SignOutEvent extends AuthEvent{
   
 }
+
+class ChangePassEvent extends AuthEvent{
+  final String oldPass;
+  final String newPass;
+  ChangePassEvent(this.oldPass, this.newPass);
+}
+
+class UpdateProfileEvent extends AuthEvent{
+  final String name;
+  final String phoneNumber;
+  final String email;
+  UpdateProfileEvent(this.name, this.phoneNumber, this.email);
+}
+
+class UpdateAddressEvent extends AuthEvent{
+  final String address;
+
+  UpdateAddressEvent(this.address);
+}

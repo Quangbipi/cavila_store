@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cavila_store/constans.dart';
+import 'package:cavila_store/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 class ProductRepository {
   final client = http.Client();
@@ -78,6 +79,44 @@ class ProductRepository {
           },
         
         body: body,
+      );
+      return res;
+    }catch(e){
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  Future<dynamic> getCart() async {
+    String token = await SecureStorageService().getToken();
+    try{
+      var res = await client.get(
+        Uri.parse('$baseUrl/v4/user/viewAllLikedProduct'),
+        headers: {
+          'Authorization': 'Bearer $token'
+          },
+        
+      );
+      return res;
+    }catch(e){
+      print(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  Future<dynamic> deleteProductInCart(String productId) async {
+    String token = await SecureStorageService().getToken();
+    try{
+      var body = jsonEncode({
+        "productId": productId
+      });
+      var res = await client.delete(
+        Uri.parse('$baseUrl/v4/user/deleteLikedProduct'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+          },
+        body: body
       );
       return res;
     }catch(e){

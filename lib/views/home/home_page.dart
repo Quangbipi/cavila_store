@@ -5,6 +5,7 @@ import 'package:cavila_store/blocs/fc_product/state.dart';
 import 'package:cavila_store/models/product.dart';
 import 'package:cavila_store/utils.dart';
 import 'package:cavila_store/widgets/app_bar.dart';
+import 'package:cavila_store/widgets/background_circle.dart';
 import 'package:cavila_store/widgets/product_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +20,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Product> products = [];
+  bool cn = true;
+  void checkConnect()async{
+    bool connectivity = await Utils.checkConnectivity();
+    setState(() {
+      cn = connectivity;
+    });
+  }
   @override
   void initState() {
     super.initState();
+    checkConnect();
   }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<ProductBloc>().add(GetProductEvent());
+      setState(() {
+        
+      });
+    } else if (state == AppLifecycleState.paused) {
+      // Ứng dụng chuyển vào background
+      context.read<ProductBloc>().add(GetProductEvent());
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,33 +56,12 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.grey.shade100,
           body: Stack(
             children: [
-              Positioned(
-                  top: -(screenWidth * 0.25),
-                  child: Container(
-                    width: screenWidth * 0.5,
-                    height: screenWidth * 0.5,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(106, 224, 217, 0.49),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: -(screenWidth * 0.25),
-                  child: Container(
-                    width: screenWidth * 0.5,
-                    height: screenWidth * 0.5,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(106, 224, 217, 0.49),
-                    ),
-                  ),
-                ),
+              BackgroundCircle.backgroundCircleTop(context),
               Positioned(
                 top: 0.0,
                 left: 0.0,
                 right: 0.0,
-                child: AppBarWidget.appBar()),
+                child: AppBarWidget.appBar(context)),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, screenHeight*0.1, 8, 0),
                 child: Column(

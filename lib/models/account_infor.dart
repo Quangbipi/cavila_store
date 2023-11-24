@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'like_product.dart';
 
 AccountInfor accountInforFromJson(String str) => AccountInfor.fromJson(json.decode(str));
+AccountInfor accountInforFromJson2(String str) => AccountInfor.fromJson2(json.decode(str));
 
 String accountInforToJson(AccountInfor data) => json.encode(data.toJson());
 
@@ -38,6 +39,16 @@ class AccountInfor {
         token: json["token"],
     );
 
+    factory AccountInfor.fromJson2(Map<String, dynamic> json) => AccountInfor(
+        id: json["_id"],
+        fullName: json["fullName"],
+        email: json["email"],
+        phoneNumber: json["phoneNumber"],
+        address: json["address"],
+        role: json["role"],
+        likedProduct: [],
+        token: json["token"],
+    );
     Map<String, dynamic> toJson() => {
         "_id": id,
         "fullName": fullName,

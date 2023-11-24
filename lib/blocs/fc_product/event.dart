@@ -40,3 +40,12 @@ class AddProductToCart extends ProductEvent {
   AddProductToCart(this.productId, this.size, this.color, this.token);
 
 }
+
+class GetProductFromCartEvent extends ProductEvent{
+  
+}
+
+class DeleteProductInCart extends ProductEvent{
+  final String productId;
+  DeleteProductInCart(this.productId);
+}

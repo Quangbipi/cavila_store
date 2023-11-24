@@ -1,3 +1,5 @@
+import 'package:cavila_store/models/payment_model.dart';
+import 'package:cavila_store/views/auth/change_pass_page.dart';
 import 'package:cavila_store/views/auth/sign_up_page.dart';
 import 'package:cavila_store/views/bottombar_page.dart';
 import 'package:cavila_store/views/cart/cart_page.dart';
@@ -9,6 +11,7 @@ import 'package:cavila_store/views/product/product_detail_page.dart';
 import 'package:cavila_store/views/profile/account_setting.dart';
 import 'package:cavila_store/views/profile/edit_address.dart';
 import 'package:cavila_store/views/profile/edit_profile.dart';
+import 'package:cavila_store/views/profile/update_address.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../views/auth/sign_in_page.dart';
@@ -20,11 +23,11 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(builder: (_) => BottomBarPage());
       case '/homePage':
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case '/signInPage':
-        return MaterialPageRoute(builder: (_) => SignInPage());
+        return MaterialPageRoute(builder: (_) => const SignInPage());
       case '/signUpPage':
-        return MaterialPageRoute(builder: (_) => SignUpPage());
+        return MaterialPageRoute(builder: (_) => const SignUpPage());
       case '/productDetailPage':
         if (args is Product) {
           return MaterialPageRoute(
@@ -32,19 +35,29 @@ class RouteGenerator {
         }
         return _errorRoute();
       case '/paymentPage':
-        return MaterialPageRoute(builder: (_) => PaymentPage());
+        if (args is PaymentModel) {
+          return MaterialPageRoute(
+              builder: (_) => PaymentPage(
+                    paymentModel: args,
+                  ));
+        }
+        return _errorRoute();
       case '/accountSetting':
-        return MaterialPageRoute(builder: (_) => AccountSetting());
+        return MaterialPageRoute(builder: (_) => const AccountSetting());
       case '/editProfile':
-        return MaterialPageRoute(builder: (_) => EditProfile());
+        return MaterialPageRoute(builder: (_) => const EditProfile());
       case '/editAddress':
-        return MaterialPageRoute(builder: (_) => EditAddress());
+        return MaterialPageRoute(builder: (_) => const EditAddress());
       case '/orderPage':
-        return MaterialPageRoute(builder: (_) => OrderPage());
+        return MaterialPageRoute(builder: (_) => const OrderPage());
       case '/voucherPage':
-        return MaterialPageRoute(builder: (_) => VoucherPage());
+        return MaterialPageRoute(builder: (_) => const VoucherPage());
       case '/cartPage':
-        return MaterialPageRoute(builder: (_) => CartPage());
+        return MaterialPageRoute(builder: (_) => const CartPage());
+      case '/changePassPage':
+        return MaterialPageRoute(builder: (_) => ChangePassPage());
+      case '/updateAddress':
+        return MaterialPageRoute(builder: (_) => const UpdateAddress());
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -55,9 +68,9 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Error'),
+          title: const Text('Error'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('ERROR'),
         ),
       );

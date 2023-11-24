@@ -2,6 +2,8 @@ import 'package:cavila_store/models/product.dart';
 import 'package:cavila_store/models/product_gender.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../models/cart_model.dart';
+
 class ProductState extends Equatable{
   @override
   List<Object?> get props => [];
@@ -82,5 +84,28 @@ class AddProductSuccess extends ProductState{
 }
 
 class AddProductFail extends ProductState {
+
+}
+
+class GetProductFromCartLoading extends ProductState{
+
+}
+
+class GetProductFromCartSuccess extends ProductState{
+  final CartModel cartModel;
+  GetProductFromCartSuccess(this.cartModel);
+}
+
+class GetProductFromCartFail extends ProductState {
+
+}
+
+class DeleteProductInCartLoading extends ProductState{
+
+}
+class DeleteProductInCartSuccess extends ProductState{
+
+}
+class DeleteProductInCartFail extends ProductState{
 
 }

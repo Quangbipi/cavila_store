@@ -11,7 +11,7 @@ class WidgetButton {
         },
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(Size(width, height)),
-            backgroundColor: MaterialStateProperty.all(Constants.pinkColor),
+            backgroundColor: MaterialStateProperty.all(Constants.secondaryColor),
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15)))),
         child: Text(

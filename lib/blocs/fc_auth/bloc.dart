@@ -16,6 +16,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInEvent>(handleSignInEvent);
     on<SignOutEvent>(handleSignOutEvent);
     on<SignUpEvent>(handleSignUpEvent);
+    on<ChangePassEvent>(handleChangePassEvent);
+    on<UpdateProfileEvent>(handleUpdateProfileEvent);
+    on<UpdateAddressEvent>(handleUpdateAddressEvent);
   }
 
   FutureOr<void> handleSignInEvent(
@@ -51,6 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.address, event.fullName, event.phoneNumber);
       if (res.statusCode == 201) {
         AccountInfor accountInfor = accountInforFromJson(res.body);
+        SecureStorageService().wireToken(accountInfor.token);
         String jsonModel = jsonEncode(accountInfor.toJson());
         await secureStorage.write(key: 'account', value: jsonModel);
         emit(SignUpSuccess(accountInfor));
@@ -61,6 +65,56 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       print(e.toString());
       emit(SignUpFail());
+    }
+  }
+
+  FutureOr<void> handleChangePassEvent(ChangePassEvent event, Emitter<AuthState> emit) async {
+    emit(ChangePassLoading());
+    try{
+      var res = await authRepository.changePass(event.oldPass, event.newPass);
+      if(res.statusCode == 200){
+        emit(ChangePassSuccess());
+      }else{
+        emit(ChangePassFail());
+      }
+    }catch(e){
+      emit(ChangePassFail());
+    }
+  }
+
+  FutureOr<void> handleUpdateProfileEvent(UpdateProfileEvent event, Emitter<AuthState> emit) async {
+    emit(UpdateProfileLoading());
+    try{
+      var res = await authRepository.updateProfile(event.name, event.phoneNumber, event.email);
+      if(res.statusCode == 200){
+        AccountInfor accountInfor = accountInforFromJson2(res.body);
+        SecureStorageService().wireToken(accountInfor.token);
+        String jsonModel = jsonEncode(accountInfor.toJson());
+        await secureStorage.write(key: 'account', value: jsonModel);
+        emit(UpdateProfileSuccess(accountInfor));
+      }else{
+        emit(UpdateprofileFail());
+      }
+    }catch(e){
+      emit(UpdateprofileFail());
+    }
+  }
+
+  FutureOr<void> handleUpdateAddressEvent(UpdateAddressEvent event, Emitter<AuthState> emit) async {
+    emit(UpdateProfileLoading());
+    try{
+      var res = await authRepository.updateAddress(event.address);
+      if(res.statusCode == 200){
+        AccountInfor accountInfor = accountInforFromJson2(res.body);
+        SecureStorageService().wireToken(accountInfor.token);
+        String jsonModel = jsonEncode(accountInfor.toJson());
+        await secureStorage.write(key: 'account', value: jsonModel);
+        emit(UpdateAddressSuccess(accountInfor));
+      }else{
+        emit(UpdateAddressFail());
+      }
+    }catch(e){
+      emit(UpdateAddressFail());
     }
   }
 }

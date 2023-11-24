@@ -1,7 +1,11 @@
 import 'package:cavila_store/constans.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class Utils {
+
+  
+
   static double screenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
@@ -120,5 +124,37 @@ class Utils {
 
   static bool checkAutoLogin(String token){
     return token.isNotEmpty;
+  }
+
+  static Future<bool> checkConnectivity() async {
+    final Connectivity connectivity = Connectivity();
+    try {
+      var connectivityResult = await connectivity.checkConnectivity();
+      return connectivityResult != ConnectivityResult.none;
+    } catch (e) {
+      print('Error checking connectivity: $e');
+      return false;
+    }
+  }
+
+  static Color getColor(String colorName) {
+    switch (colorName) {
+      case 'Red':
+        return Colors.red;
+      case 'Orange':
+        return Colors.orange;
+      case 'Yellow':
+        return Colors.yellow;
+      case 'Green':
+        return Colors.green;
+      case 'Blue':
+        return Colors.blue;
+      case 'Indigo':
+        return Colors.indigo;
+      case 'Violet':
+        return Colors.purple;
+      default:
+        return Colors.black;
+    }
   }
 }

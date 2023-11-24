@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cavila_store/blocs/fc_product/event.dart';
 import 'package:cavila_store/blocs/fc_product/repository.dart';
 import 'package:cavila_store/blocs/fc_product/state.dart';
+import 'package:cavila_store/models/cart_model.dart';
 import 'package:cavila_store/models/product.dart';
 import 'package:cavila_store/models/product_gender.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<GetNewProductEvent>(handleGetNewProductEvent);
     on<GetProductGenderEvent>(handleGetProductGenderEvent);
     on<AddProductToCart>(handleAddProductToCart);
+    on<GetProductFromCartEvent>(handleGetProductFromCartEvent);
+    on<DeleteProductInCart>(handleDeleteProductInCart);
   }
 
   FutureOr<void> handleGetProductEvent(
@@ -26,6 +29,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(GetProductSuccess(products));
       }
     } catch (e) {
+      print(e.toString());
       emit(GetProductFail(e.toString()));
     }
   }
@@ -65,9 +69,40 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       if (res.statusCode == 200) {
         
         emit(AddProductSuccess());
+      }else{
+        emit(AddProductFail());
       }
     } catch (e) {
       emit(AddProductFail());
+    }
+  }
+
+  FutureOr<void> handleGetProductFromCartEvent(GetProductFromCartEvent event, Emitter<ProductState> emit) async {
+    emit(GetProductFromCartLoading());
+    try{
+      var res = await productRepository.getCart();
+      if(res.statusCode == 200){
+        CartModel cartModel = cartModelFromJson(res.body);
+        emit(GetProductFromCartSuccess(cartModel));
+      }else{
+        emit(GetProductFromCartFail());
+      }
+    }catch(e){
+      emit(GetProductFromCartFail());
+    }
+  }
+
+  FutureOr<void> handleDeleteProductInCart(DeleteProductInCart event, Emitter<ProductState> emit) async {
+    emit(DeleteProductInCartLoading());
+    try{
+      var res =await productRepository.deleteProductInCart(event.productId);
+      if(res.statusCode == 200){
+        emit(DeleteProductInCartSuccess());
+      }else{
+        emit(DeleteProductInCartFail());
+      }
+    }catch(e){
+      emit(DeleteProductInCartFail());
     }
   }
 }
