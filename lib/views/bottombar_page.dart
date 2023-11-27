@@ -42,6 +42,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
   void initState() {
     
     super.initState();
+    context.read<BottomBarBloc>().add(BottomBarInitialEvent());
   }
   @override
   Widget build(BuildContext context) {

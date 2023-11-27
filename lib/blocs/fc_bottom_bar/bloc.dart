@@ -8,10 +8,19 @@ class BottomBarBloc extends Bloc<BottomBarEvent, BottomBarState>{
 
   BottomBarBloc() : super(BottomBarState()){
     on<BottomBarChangeEvent>(handleBottomBarChange);
+    on<BottomBarInitialEvent>(handleBottomBarInitialEvent);
   }
 
 
   FutureOr<void> handleBottomBarChange(BottomBarChangeEvent event, Emitter<BottomBarState> emit) async {
-    emit(BottomBarChangeSuccess(event.selectIndex));
+    try{
+      emit(BottomBarChangeSuccess(event.selectIndex));
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  FutureOr<void> handleBottomBarInitialEvent(BottomBarInitialEvent event, Emitter<BottomBarState> emit) async {
+    emit(BottomBarState());
   }
 }

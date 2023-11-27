@@ -7,6 +7,10 @@ class BottomBarEvent extends Equatable{
 
 }
 
+class BottomBarInitialEvent extends BottomBarEvent{
+
+}
+
 class BottomBarChangeEvent extends BottomBarEvent{
   final int selectIndex;
   BottomBarChangeEvent(this.selectIndex);

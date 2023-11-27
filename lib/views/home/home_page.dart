@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Product> products = [];
+  List<Product> productSearch = [];
   bool cn = true;
   void checkConnect()async{
     bool connectivity = await Utils.checkConnectivity();
@@ -45,6 +46,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  TextEditingController search = TextEditingController();
+
+  void onSearchTextChange(String text) async {
+    productSearch.clear();
+    if (text.isEmpty) {
+      productSearch.addAll(products);
+      setState(() {});
+      return;
+    }
+    var s2 = Utils.getAscii(text).toLowerCase();
+    //var so2 = text.toLowerCase();
+    products.forEach((product) {
+      //var so1 = location.locationName.toLowerCase();
+      var s1 = Utils.getAscii(product.name).toLowerCase();
+      //debugPrint("s1:$s1, s2:$s2, compare:${s1.contains(s2)}");
+      if (s1.contains(s2)) {
+        productSearch.add(product);
+      }
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +97,10 @@ class _HomePageState extends State<HomePage> {
                         height: 15,
                       ),
                       TextField(
+                        controller: search,
+                        onChanged: (value) {
+                          onSearchTextChange(value);
+                        },
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -98,11 +124,12 @@ class _HomePageState extends State<HomePage> {
                           Flexible(
                             flex: 1,
                             child: Utils.textButton(
-                                screenHeight * 0.05, screenWidth * 0.40, () {
-                              context
-                                  .read<ProductBloc>()
-                                  .add(GetNewProductEvent());
-                            }, 'Nổi bật'),
+                                screenHeight * 0.05, 
+                                screenWidth * 0.40, 
+                                () {
+                                  search.text = '';
+                                context.read<ProductBloc>().add(GetNewProductEvent());}, 
+                                'Nổi bật'),
                           ),
                           Flexible(
                               flex: 1,
@@ -113,6 +140,7 @@ class _HomePageState extends State<HomePage> {
                                   Utils.textButton(
                                       screenHeight * 0.05, screenWidth * 0.2,
                                       () {
+                                        search.text = '';
                                     context
                                         .read<ProductBloc>()
                                         .add(GetProductGenderEvent('M'));
@@ -120,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                                   Utils.textButton(
                                       screenHeight * 0.05, screenWidth * 0.2,
                                       () {
+                                        search.text = '';
                                     context
                                         .read<ProductBloc>()
                                         .add(GetProductGenderEvent('L'));
@@ -134,9 +163,11 @@ class _HomePageState extends State<HomePage> {
                           products = state.products;
                         }
                         if (state is GetNewProductSuccess) {
+                          productSearch.clear();
                           products = state.products;
                         }
                         if (state is GetProductGenderSuccess) {
+                          productSearch.clear();
                           products = state.productGender.products;
                         }
                       }, buildWhen: (previous, current) {
@@ -164,10 +195,10 @@ class _HomePageState extends State<HomePage> {
                                       crossAxisSpacing: 15,
                                       mainAxisSpacing: 15,
                                       childAspectRatio: 2 / 3.5),
-                              itemCount: products.length,
+                              itemCount: productSearch.isEmpty ? products.length : productSearch.length,
                               itemBuilder: (context, index) {
                                 return ProductItemCard(
-                                    product: products[index]);
+                                    product: productSearch.isEmpty ? products[index] : productSearch[index]);
                               }),
                         );
                       })

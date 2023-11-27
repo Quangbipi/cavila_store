@@ -157,4 +157,35 @@ class Utils {
         return Colors.black;
     }
   }
+
+  static var vietnameseSigns = [
+    "aAeEoOuUiIdDyY",
+    "áàạảãâấầậẩẫăắằặẳẵ",
+    "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+    "éèẹẻẽêếềệểễ",
+    "ÉÈẸẺẼÊẾỀỆỂỄ",
+    "óòọỏõôốồộổỗơớờợởỡ",
+    "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+    "úùụủũưứừựửữ",
+    "ÚÙỤỦŨƯỨỪỰỬỮ",
+    "íìịỉĩ",
+    "ÍÌỊỈĨ",
+    "đ",
+    "Đ",
+    "ýỳỵỷỹ",
+    "ÝỲỴỶỸ",
+  ];
+
+  static String getAscii(String input) {
+    //String resultString = input.replaceAll(RegExp(r'[^\\x00-\\x7F]'), ""); //Hà Nội => HN
+    //String resultString = input.replaceAll(RegExp('[^\\x00-\\x7F]'), ""); // Hà Nội => H Ni
+    String resultString = input;
+    for (var i = 1; i < vietnameseSigns.length; i++) {
+      for (var j = 0; j < vietnameseSigns[i].length; j++) {
+        resultString = resultString.replaceAll(
+            vietnameseSigns[i][j], vietnameseSigns[0][i - 1]);
+      }
+    }
+    return resultString;
+  }
 }

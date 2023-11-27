@@ -198,10 +198,10 @@ class _AccountSettingState extends State<AccountSetting> {
                       Utils.checkAutoLogin(accountInfor!.token)) {
                     context.read<AuthBloc>().add(SignOutEvent());
                     Navigator.of(context)
-                        .pushReplacementNamed(RoutePaths.signInPage);
+                        .popAndPushNamed(RoutePaths.signInPage);
                   } else {
                     Navigator.of(context)
-                        .pushReplacementNamed(RoutePaths.signInPage);
+                        .popAndPushNamed(RoutePaths.signInPage);
                   }
                 },
                     accountInfor != null &&

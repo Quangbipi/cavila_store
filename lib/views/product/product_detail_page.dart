@@ -98,235 +98,237 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               children: [
                 BackgroundCircle.backgroundCircleTop(context),
                 BackgroundCircle.backgroundCircleBottom(context),
-                Padding(
-                  padding: EdgeInsets.only(top: screenHeight * 0.12),
-                  child: Column(
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: widget.product.images.first,
-                        imageBuilder: (context, imageProvider) {
-                          return Container(
-                            width: screenWidth,
-                            height: screenHeight * 0.5,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.fill)),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      widget.product.name,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      '${Utils.numberFormat(widget.product.price)} đ',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ))
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                    flex: 2,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Cỡ',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Row(
-                                          children: List.generate(
-                                              widget.product.sizes.length,
-                                              (index) => Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 8, 0),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          size = index;
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                        width: 32,
-                                                        height: 32,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                shape: BoxShape
-                                                                    .circle),
-                                                        child: Text(
-                                                          widget.product
-                                                              .sizes[index],
-                                                          style: TextStyle(
-                                                              color: size ==
-                                                                      index
-                                                                  ? Colors.red
-                                                                  : Colors
-                                                                      .black),
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: screenHeight * 0.12),
+                    child: Column(
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: widget.product.images.first,
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              width: screenWidth,
+                              height: screenHeight * 0.5,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.fill)),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        widget.product.name,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${Utils.numberFormat(widget.product.price)} đ',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Cỡ',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Row(
+                                            children: List.generate(
+                                                widget.product.sizes.length,
+                                                (index) => Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(0, 0, 8, 0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            size = index;
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          width: 32,
+                                                          height: 32,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                          child: Text(
+                                                            widget.product
+                                                                .sizes[index],
+                                                            style: TextStyle(
+                                                                color: size ==
+                                                                        index
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .black),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  )),
-                                        )
-                                      ],
-                                    )),
-                                // Expanded(
-                                //     flex: 1,
-                                //     child: Column(
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.start,
-                                //       children: [
-                                //         const Text(
-                                //           'Số lượng',
-                                //           style: TextStyle(
-                                //               fontSize: 18,
-                                //               fontWeight: FontWeight.bold),
-                                //         ),
-                                //         Container(
-                                //           width: 80,
-                                //           height: 40,
-                                //           padding: const EdgeInsets.all(5),
-                                //           decoration: BoxDecoration(
-                                //               borderRadius:
-                                //                   BorderRadius.circular(5),
-                                //               border: Border.all()),
-                                //           child: Row(
-                                //               crossAxisAlignment:
-                                //                   CrossAxisAlignment.center,
-                                //               children: [
-                                //                 const Expanded(
-                                //                     flex: 2, child: Text('1')),
-                                //                 const VerticalDivider(
-                                //                   thickness: 1,
-                                //                   width: 2,
-                                //                   indent: 0,
-                                //                   color: Colors.black,
-                                //                 ),
-                                //                 Expanded(
-                                //                   flex: 1,
-                                //                   child: IconButton(
-                                //                       padding: EdgeInsets.zero,
-                                //                       onPressed: () {},
-                                //                       icon: const Icon(
-                                //                         Icons.add,
-                                //                         color: Colors.white,
-                                //                       )),
-                                //                 )
-                                //               ]),
-                                //         )
-                                //       ],
-                                //     ))
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Màu',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  children: List.generate(
-                                      widget.product.colors.length,
-                                      (index) => Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 8, 0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  colorSelect = index;
-                                                });
-                                              },
-                                              child: Container(
-                                                width: 32,
-                                                height: 32,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    color:Utils.getColor(widget
-                                                        .product.colors[index]),
-                                                    border: Border.all(
-                                                        width: 3,
-                                                        color: colorSelect ==
-                                                                index
-                                                            ? Colors.white
-                                                            : Colors
-                                                                .transparent),
-                                                    shape: BoxShape.circle),
+                                                    )),
+                                          )
+                                        ],
+                                      )),
+                                  // Expanded(
+                                  //     flex: 1,
+                                  //     child: Column(
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         const Text(
+                                  //           'Số lượng',
+                                  //           style: TextStyle(
+                                  //               fontSize: 18,
+                                  //               fontWeight: FontWeight.bold),
+                                  //         ),
+                                  //         Container(
+                                  //           width: 80,
+                                  //           height: 40,
+                                  //           padding: const EdgeInsets.all(5),
+                                  //           decoration: BoxDecoration(
+                                  //               borderRadius:
+                                  //                   BorderRadius.circular(5),
+                                  //               border: Border.all()),
+                                  //           child: Row(
+                                  //               crossAxisAlignment:
+                                  //                   CrossAxisAlignment.center,
+                                  //               children: [
+                                  //                 const Expanded(
+                                  //                     flex: 2, child: Text('1')),
+                                  //                 const VerticalDivider(
+                                  //                   thickness: 1,
+                                  //                   width: 2,
+                                  //                   indent: 0,
+                                  //                   color: Colors.black,
+                                  //                 ),
+                                  //                 Expanded(
+                                  //                   flex: 1,
+                                  //                   child: IconButton(
+                                  //                       padding: EdgeInsets.zero,
+                                  //                       onPressed: () {},
+                                  //                       icon: const Icon(
+                                  //                         Icons.add,
+                                  //                         color: Colors.white,
+                                  //                       )),
+                                  //                 )
+                                  //               ]),
+                                  //         )
+                                  //       ],
+                                  //     ))
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Màu',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Row(
+                                    children: List.generate(
+                                        widget.product.colors.length,
+                                        (index) => Padding(
+                                              padding: const EdgeInsets.fromLTRB(
+                                                  0, 0, 8, 0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    colorSelect = index;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  width: 32,
+                                                  height: 32,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      color:Utils.getColor(widget
+                                                          .product.colors[index]),
+                                                      border: Border.all(
+                                                          width: 3,
+                                                          color: colorSelect ==
+                                                                  index
+                                                              ? Colors.white
+                                                              : Colors
+                                                                  .transparent),
+                                                      shape: BoxShape.circle),
+                                                ),
                                               ),
-                                            ),
-                                          )),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            WidgetButton.buildButton(
-                                screenHeight * 0.06, screenWidth * 0.8, () {
-                              if(token == null){
-                                Utils.showAlert(context,
-                                    'Bạn cần đăng nhập để thực hiện tác vụ này',
-                                    () {
-                                  Navigator.pushReplacementNamed(
-                                      context, RoutePaths.signInPage);
-                                });
-                              }else{
-                                if (Utils.checkAutoLogin(token!)) {
-                                context.read<ProductBloc>().add(
-                                    AddProductToCart(
-                                        widget.product.id,
-                                        widget.product.sizes[size],
-                                        widget.product.colors[colorSelect],
-                                        token!));
-                              } else {
-                                Utils.showAlert(context,
-                                    'Bạn cần đăng nhập để thực hiện tác vụ này',
-                                    () {
-                                  Navigator.pushReplacementNamed(
-                                      context, RoutePaths.signInPage);
-                                });
-                              }
-                              }
-                              
-                            }, 'Thêm vào giỏ hàng')
-                          ],
-                        ),
-                      )
-                    ],
+                                            )),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              WidgetButton.buildButton(
+                                  screenHeight * 0.06, screenWidth * 0.8, () {
+                                if(token == null){
+                                  Utils.showAlert(context,
+                                      'Bạn cần đăng nhập để thực hiện tác vụ này',
+                                      () {
+                                    Navigator.pushReplacementNamed(
+                                        context, RoutePaths.signInPage);
+                                  });
+                                }else{
+                                  if (Utils.checkAutoLogin(token!)) {
+                                  context.read<ProductBloc>().add(
+                                      AddProductToCart(
+                                          widget.product.id,
+                                          widget.product.sizes[size],
+                                          widget.product.colors[colorSelect],
+                                          token!));
+                                } else {
+                                  Utils.showAlert(context,
+                                      'Bạn cần đăng nhập để thực hiện tác vụ này',
+                                      () {
+                                    Navigator.pushReplacementNamed(
+                                        context, RoutePaths.signInPage);
+                                  });
+                                }
+                                }
+                                
+                              }, 'Thêm vào giỏ hàng')
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
