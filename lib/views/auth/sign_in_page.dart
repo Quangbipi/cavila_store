@@ -20,6 +20,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  int valiEmail = 1;
+  int valiPass = 1;
   @override
   Widget build(BuildContext context) {
     final screenWidth = Utils.screenWidth(context);
@@ -27,28 +29,28 @@ class _SignInPageState extends State<SignInPage> {
     return ProgressHUD(
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if(state is SignInSuccess){
-             Future.delayed(Duration.zero, () {
-                  var progress = ProgressHUD.of(context);
-                  progress!.dismiss();
-                });
+          if (state is SignInSuccess) {
+            Future.delayed(Duration.zero, () {
+              var progress = ProgressHUD.of(context);
+              progress!.dismiss();
+            });
             Navigator.of(context).pushReplacementNamed(RoutePaths.mainPage);
           }
-          if(state is SignInLoading){
+          if (state is SignInLoading) {
             Future.delayed(Duration.zero, () {
-                  var progress = ProgressHUD.of(context);
-                  progress!.show();
-                });
+              var progress = ProgressHUD.of(context);
+              progress!.show();
+            });
           }
-          if(state is SignInFail){
-             Future.delayed(Duration.zero, () {
-                  var progress = ProgressHUD.of(context);
-                  progress!.dismiss();
-                });
-            Utils.showAlert(
-              context, 
-              'Tài khoản hoặc mật khẩu không chính xác', 
-              (){Navigator.pop(context);});
+          if (state is SignInFail) {
+            Future.delayed(Duration.zero, () {
+              var progress = ProgressHUD.of(context);
+              progress!.dismiss();
+            });
+            Utils.showAlert(context, 'Tài khoản hoặc mật khẩu không chính xác',
+                () {
+              Navigator.pop(context);
+            });
           }
         },
         child: Scaffold(
@@ -66,7 +68,8 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       const Text(
                         'Welcome back!',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -84,12 +87,19 @@ class _SignInPageState extends State<SignInPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: TextField(
                           controller: email,
+                          onChanged: (value) {
+                            setState(() {
+                              valiEmail = Utils.validateEmail(value);
+                            });
+                          },
                           decoration: InputDecoration(
                               hintText: 'Tài khoản',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 22)),
+                                  vertical: 5, horizontal: 22),
+                              errorText:
+                                  valiEmail == 1 ? null : 'Email không hợp lệ'),
                         ),
                       ),
                       const SizedBox(
@@ -99,13 +109,21 @@ class _SignInPageState extends State<SignInPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: TextField(
                           controller: password,
+                          onChanged: (value) {
+                            setState(() {
+                              valiPass = Utils.validatePass(value);
+                            });
+                          },
                           obscureText: true,
                           decoration: InputDecoration(
                               hintText: 'Mật khẩu',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 22)),
+                                  vertical: 5, horizontal: 22),
+                              errorText:
+                                  valiPass == 1 ? null : 'Mật khẩu phải lớn hơn 6 ký tự'
+                                  ),
                         ),
                       ),
                       const SizedBox(
@@ -127,13 +145,19 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                               ),
                               onPressed: () {
-                                if(email.text.isEmpty || password.text.isEmpty){
-                                  Utils.showAlert(context, 'Vui lòng nhập đủ thông tin', (){Navigator.pop(context);});
+                                if (email.text.isEmpty ||
+                                    password.text.isEmpty) {
+                                  Utils.showAlert(
+                                      context, 'Vui lòng nhập đủ thông tin',
+                                      () {
+                                    Navigator.pop(context);
+                                  });
                                 }
-                                if(password.text.isNotEmpty && email.text.isNotEmpty){
-                                  context.read<AuthBloc>().add(SignInEvent(email.text, password.text));
+                                if (password.text.isNotEmpty &&
+                                    email.text.isNotEmpty) {
+                                  context.read<AuthBloc>().add(
+                                      SignInEvent(email.text, password.text));
                                 }
-                                
                               },
                               child: const Text(
                                 'Đăng nhập',
@@ -142,16 +166,23 @@ class _SignInPageState extends State<SignInPage> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ))),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text('Bạn chưa có tài khoản? '),
                           InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, RoutePaths.signUpPage);
-                            },
-                            child: Text('Đăng ký', style: TextStyle(color: Constants.secondaryColor),))
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePaths.signUpPage);
+                              },
+                              child: Text(
+                                'Đăng ký',
+                                style:
+                                    TextStyle(color: Constants.secondaryColor),
+                              ))
                         ],
                       )
                     ],
