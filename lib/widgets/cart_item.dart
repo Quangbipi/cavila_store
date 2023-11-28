@@ -13,7 +13,11 @@ class CartItem extends StatefulWidget {
   final LikedProductCart product;
   final ValueChanged<bool> onCheckboxChanged;
   final ValueChanged<int> onTotalPriceChanged;
-  CartItem({super.key, required this.product, required this.onCheckboxChanged, required this.onTotalPriceChanged});
+  CartItem(
+      {super.key,
+      required this.product,
+      required this.onCheckboxChanged,
+      required this.onTotalPriceChanged});
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -24,7 +28,6 @@ class _CartItemState extends State<CartItem> {
   bool isSelect = false;
   int totalPrice = 0;
 
-  
   @override
   Widget build(BuildContext context) {
     double screenHeight = Utils.screenHeight(context);
@@ -79,7 +82,8 @@ class _CartItemState extends State<CartItem> {
                           width: 32,
                           height: 32,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Utils.getColor(widget.product.color)),
+                              shape: BoxShape.circle,
+                              color: Utils.getColor(widget.product.color)),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -100,54 +104,70 @@ class _CartItemState extends State<CartItem> {
                               color: Colors.white, shape: BoxShape.circle),
                           child: Text(number.toString()),
                         ),
-                        SizedBox(width: 10,),
-                        Container(
-                          width: 64,
-                          height: 32,
-                          alignment: Alignment.center,
-                          decoration:  BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 5,),
-                              InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    if(number == 1) return;
-                                    number--;
-                                    widget.onCheckboxChanged(isSelect);
-                                    if(isSelect ){
-                                      widget.onTotalPriceChanged(-1);
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  width: 16,
-                                  height: 32,
-                                  child: Text('-', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
-                              ),
-                              VerticalDivider(thickness: 1,indent: 0,),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    number++;
-                                    widget.onCheckboxChanged(isSelect);
-                                    if(isSelect){
-                                      widget.onTotalPriceChanged(1);
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: 32,
-                                  width: 16,
-                                  child: Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
-                              ),
-                            ],
-                          )
+                        SizedBox(
+                          width: 10,
                         ),
+                        Container(
+                            width: 64,
+                            height: 32,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (number == 1) return;
+                                      number--;
+                                      widget.onCheckboxChanged(isSelect);
+                                      if (isSelect) {
+                                        widget.onTotalPriceChanged(-1);
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                      width: 16,
+                                      height: 32,
+                                      child: Text(
+                                        '-',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      )),
+                                ),
+                                VerticalDivider(
+                                  thickness: 1,
+                                  indent: 0,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      number++;
+                                      widget.onCheckboxChanged(isSelect);
+                                      if (isSelect) {
+                                        widget.onTotalPriceChanged(1);
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                      height: 32,
+                                      width: 16,
+                                      child: Text(
+                                        '+',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      )),
+                                ),
+                              ],
+                            )),
                       ],
                     )
                   ],
@@ -156,7 +176,8 @@ class _CartItemState extends State<CartItem> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        context.read<ProductBloc>().add(DeleteProductInCart(widget.product.productId.id));
+                        context.read<ProductBloc>().add(
+                            DeleteProductInCart(widget.product.productId.id));
                         setState(() {
                           isSelect = false;
                           widget.onCheckboxChanged(isSelect);
@@ -169,8 +190,15 @@ class _CartItemState extends State<CartItem> {
                       width: 24,
                       height: 24,
                       child: Checkbox(
-                          fillColor:
-                              MaterialStateProperty.all(Constants.secondaryColor),
+                          fillColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            // Màu của ô khi chưa được chọn
+                            if (states.contains(MaterialState.selected)) {
+                              return Constants.secondaryColor; // Màu khi checkbox được chọn
+                            }
+                            return Colors
+                                .white; // Màu khi checkbox không được chọn
+                          }),
                           value: isSelect,
                           onChanged: (value) {
                             setState(() {

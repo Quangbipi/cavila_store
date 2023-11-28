@@ -16,7 +16,7 @@ class Product {
     final List<String> images;
     final List<dynamic> vouchers;
     final int numberOfReviews;
-    final List<dynamic> comments;
+    final List<Comment> comments;
     final int v;
     final String gender;
 
@@ -51,7 +51,7 @@ class Product {
         images: List<String>.from(json["images"].map((x) => x)),
         vouchers: List<dynamic>.from(json["vouchers"].map((x) => x)),
         numberOfReviews: json["numberOfReviews"],
-        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+        comments:  List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),
         v: json["__v"],
         gender: json["gender"],
     );
@@ -73,5 +73,49 @@ class Product {
         "__v": v,
         "gender": gender,
        
+    };
+}
+
+class Comment {
+    final String userName;
+    final int rating;
+    final String comment;
+    final String userId;
+    final DateTime commentCreatedAt;
+    final String id;
+    final DateTime createdAt;
+    final DateTime updatedAt;
+
+    Comment({
+        required this.userName,
+        required this.rating,
+        required this.comment,
+        required this.userId,
+        required this.commentCreatedAt,
+        required this.id,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    factory Comment.fromJson(Map<String, dynamic> json) => Comment(
+        userName: json["userName"],
+        rating: json["rating"],
+        comment: json["comment"],
+        userId: json["userId"],
+        commentCreatedAt: DateTime.parse(json["created_at"]),
+        id: json["_id"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "userName": userName,
+        "rating": rating,
+        "comment": comment,
+        "userId": userId,
+        "created_at": commentCreatedAt.toIso8601String(),
+        "_id": id,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
     };
 }

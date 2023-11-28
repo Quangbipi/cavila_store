@@ -2,6 +2,8 @@ import 'package:cavila_store/blocs/fc_auth/bloc.dart';
 import 'package:cavila_store/blocs/fc_auth/repository.dart';
 import 'package:cavila_store/blocs/fc_bottom_bar/bloc.dart';
 import 'package:cavila_store/blocs/fc_check_login/bloc.dart';
+import 'package:cavila_store/blocs/fc_comment/bloc.dart';
+import 'package:cavila_store/blocs/fc_comment/repository.dart';
 import 'package:cavila_store/blocs/fc_order/bloc.dart';
 import 'package:cavila_store/blocs/fc_order/repository.dart';
 import 'package:cavila_store/blocs/fc_payment/bloc.dart';
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
           RepositoryProvider<VoucherRepository>(create: (context) => VoucherRepository()),
           RepositoryProvider<PaymentRepository>(create: (context) => PaymentRepository()),
           RepositoryProvider<OrderRepository>(create: (context) => OrderRepository()),
+          RepositoryProvider<CommentRepository>(create: (context) => CommentRepository()),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => PaymentBloc(RepositoryProvider.of(context))),
             BlocProvider(create: (context) => OrderBloc(RepositoryProvider.of(context))),
             BlocProvider(create: (context) => CheckBloc()),
+            BlocProvider(create: (context) => CommentBloc(RepositoryProvider.of(context))),
           ],
           child: MaterialApp(
             title: 'Cavila Store',

@@ -1,4 +1,5 @@
 import 'package:cavila_store/constans.dart';
+import 'package:cavila_store/widgets/alert_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -187,5 +188,15 @@ class Utils {
       }
     }
     return resultString;
+  }
+
+  static showAlertCustom(BuildContext context, String productId){
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return AlertWidget(productId: productId,);
+        });
   }
 }

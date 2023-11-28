@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:cavila_store/utils.dart';
+import 'package:cavila_store/widgets/widget_button.dart';
 import 'package:flutter/material.dart';
 
 
@@ -54,7 +55,10 @@ class _OrderItemState extends State<OrderItem> {
                   shrinkWrap: true,
                   itemCount: widget.orderModel.products.length,
                   itemBuilder: (context, index) {
-                    return Row(
+                    return Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -132,7 +136,17 @@ class _OrderItemState extends State<OrderItem> {
                                   )
                                 ],
                               ))
-                        ]);
+                        ]),
+                        
+                        widget.orderModel.isConfirm == 3 ? WidgetButton.buildButtonSmall(
+                          screenHeight*0.03, 
+                          screenWidth*0.1, 
+                          (){
+                            Utils.showAlertCustom(context, widget.orderModel.products[index].product!.id);
+                          }, 
+                          'Đánh giá'):Container()
+                      ],
+                    );
                   }),
               Divider(
                 thickness: 1,

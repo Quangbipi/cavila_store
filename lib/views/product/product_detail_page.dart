@@ -10,6 +10,7 @@ import 'package:cavila_store/secure_storage_service.dart';
 import 'package:cavila_store/utils.dart';
 import 'package:cavila_store/widgets/app_bar.dart';
 import 'package:cavila_store/widgets/background_circle.dart';
+import 'package:cavila_store/widgets/comment_item.dart';
 import 'package:cavila_store/widgets/widget_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,12 +93,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         },
         child: Scaffold(
             backgroundColor: Constants.bgk,
-            extendBodyBehindAppBar: true,
-            appBar: AppBarWidget.appBar(context),
             body: Stack(
               children: [
                 BackgroundCircle.backgroundCircleTop(context),
                 BackgroundCircle.backgroundCircleBottom(context),
+                
                 SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(top: screenHeight * 0.12),
@@ -129,7 +129,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       flex: 2,
                                       child: Text(
                                         widget.product.name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
                                       )),
@@ -137,7 +137,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       flex: 1,
                                       child: Text(
                                         '${Utils.numberFormat(widget.product.price)} đ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
                                       ))
@@ -179,7 +179,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                           alignment:
                                                               Alignment.center,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                                   color: Colors
                                                                       .white,
                                                                   shape: BoxShape
@@ -294,7 +294,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 40,
+                                height: 20,
                               ),
                               WidgetButton.buildButton(
                                   screenHeight * 0.06, screenWidth * 0.8, () {
@@ -323,7 +323,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 }
                                 }
                                 
-                              }, 'Thêm vào giỏ hàng')
+                              }, 'Thêm vào giỏ hàng'),
+                              const SizedBox(height: 10,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text('Đánh giá (${widget.product.numberOfReviews})', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
+                                ],
+                              ),
+                              const Divider(thickness: 1,),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.product.comments.length,
+                                itemBuilder: (context, index){
+                                  return CommentItem.commentWidget(widget.product.comments[index]);
+                                }),
+                              const SizedBox(height: 20,)
                             ],
                           ),
                         )
@@ -331,7 +347,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                 ),
+                Positioned(
+                  right: 0,
+                  left: 0,
+                  top: 0,
+                  child: AppBarWidget.appBar(context)),
               ],
+              
             )),
       ),
     );

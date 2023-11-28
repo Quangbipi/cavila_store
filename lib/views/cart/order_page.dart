@@ -1,3 +1,5 @@
+import 'package:cavila_store/blocs/fc_comment/bloc.dart';
+import 'package:cavila_store/blocs/fc_comment/state.dart';
 import 'package:cavila_store/blocs/fc_order/bloc.dart';
 import 'package:cavila_store/blocs/fc_order/state.dart';
 import 'package:cavila_store/blocs/fc_product/state.dart';
@@ -113,12 +115,43 @@ class _OrderPageState extends State<OrderPage> {
               }
             },
           ),
-          BlocListener<ProductBloc, ProductState>(
-            listener: (context, state){
-              if(state is GetProductSuccess){
-                products = state.products;
+          BlocListener<ProductBloc, ProductState>(listener: (context, state) {
+            if (state is GetProductSuccess) {
+              products = state.products;
+            }
+          }),
+          BlocListener<CommentBloc, CommentState>(
+            listener: (context, state) {
+              if (state is CommentSuccess) {
+                Future.delayed(Duration.zero, () {
+                  var progress = ProgressHUD.of(context);
+                  progress!.dismiss();
+                });
+                Utils.showAlert(
+                    context, 'Đánh giá thành công. Xin cảm ơn bạn đã mua hàng',
+                    () {
+                  Navigator.pop(context);
+                });
               }
-            })
+              if (state is CommentLoading) {
+                Future.delayed(Duration.zero, () {
+                  var progress = ProgressHUD.of(context);
+                  progress!.show();
+                });
+              }
+              if (state is CommentFail) {
+                Future.delayed(Duration.zero, () {
+                  var progress = ProgressHUD.of(context);
+                  progress!.dismiss();
+                });
+                Utils.showAlert(
+                    context, 'Bạn đã đánh giá sản phẩm này rồi',
+                    () {
+                  Navigator.pop(context);
+                });
+              }
+            },
+          )
         ],
         child: Scaffold(
             backgroundColor: Constants.bgk,

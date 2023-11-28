@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'models/fake_data.dart';
 
-var baseUrl = 'http://192.168.109.95:4000';
-//var baseUrl = 'http://192.168.1.62:4000';
+//var baseUrl = 'http://192.168.109.95:4000';
+var baseUrl = 'http://192.168.1.62:4000';
 class Constants {
   static const secondaryColor = Color.fromRGBO(80, 194, 201, 1);
   static const primaryColor = Color.fromRGBO(255, 212, 222, 1);
