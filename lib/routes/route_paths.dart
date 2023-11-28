@@ -13,4 +13,5 @@ class RoutePaths{
   static const String cartPage = '/cartPage';
   static const String changePassPage = '/changePassPage';
   static const String updateAddress = '/updateAddress';
+   static const String splashScreen = '/splashScreen';
 }

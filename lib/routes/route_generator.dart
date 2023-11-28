@@ -12,6 +12,7 @@ import 'package:cavila_store/views/profile/account_setting.dart';
 import 'package:cavila_store/views/profile/edit_address.dart';
 import 'package:cavila_store/views/profile/edit_profile.dart';
 import 'package:cavila_store/views/profile/update_address.dart';
+import 'package:cavila_store/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../views/auth/sign_in_page.dart';
@@ -22,6 +23,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => BottomBarPage());
+      case '/splashScreen':
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case '/homePage':
         return MaterialPageRoute(builder: (_) => const HomePage());
       case '/signInPage':

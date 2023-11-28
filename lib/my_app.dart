@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               primaryColor: const Color.fromRGBO(255, 212, 222, 1),
             ),
-            initialRoute: RoutePaths.mainPage,
+            initialRoute: RoutePaths.splashScreen,
             onGenerateRoute: RouteGenerator.generateRoute,
             debugShowCheckedModeBanner: false,
           ),
